@@ -19,7 +19,7 @@ class App extends Component {
       this.setState({
         todoItems: this.state.todoItems.map(i => {
           if (i !== item) {
-            return {...i}
+            return {...i};
           }
           else {
             return {...i, isComplete: !item.isComplete};
