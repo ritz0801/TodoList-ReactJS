@@ -7,21 +7,26 @@ class App extends Component {
     super();
     this.state = {
       todoItems: [
-        { id: 1, title: 'Mua bim bim', isComplete: false },
-        { id: 2, title: 'Đi đá bóng', isComplete: false },
-        { id: 3, title: 'Đi đổ xăng', isComplete: false }]
+        { title: 'Mua bim bim', isComplete: false },
+        { title: 'Đi đá bóng', isComplete: false },
+        { title: 'Đi đổ xăng', isComplete: false }]
     }
     this.isCompleteChange = this.isCompleteChange.bind(this)
   }
 
-  isCompleteChange(id) {
-    const newArr = this.state.todoItems.map(item => {
-      if (item.id == id) {
-        return { ...item, isComplete: !item.isComplete }
-      }
-      return item
-    })
-    this.setState({ todoItems: newArr })
+  isCompleteChange(item) {
+    return () => {
+      this.setState({
+        todoItems: this.state.todoItems.map(i => {
+          if (i !== item) {
+            return {...i};
+          }
+          else {
+            return {...i, isComplete: !item.isComplete};
+          }
+        })
+      })
+    };
   }
   
   render() {
@@ -32,7 +37,7 @@ class App extends Component {
             return <TodoItem
               key={index}
               item={item}
-              isCompleteChange={this.isCompleteChange}
+              onClick={this.isCompleteChange(item)}
             />
           })
         }
